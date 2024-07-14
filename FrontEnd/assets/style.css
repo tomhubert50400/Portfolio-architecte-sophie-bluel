@@ -52,6 +52,7 @@ body {
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
+	background-color: #FFFEF8;
 }
 header {
 	display: flex;
@@ -88,7 +89,7 @@ nav ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
-
+	cursor: pointer;
 }
 nav li {
 	padding: 0 10px;
@@ -97,6 +98,7 @@ nav li {
 
 li:hover {
 	color: #B1663C;
+	font-weight: bold;
 }
 #introduction {
 	display: flex;
@@ -142,7 +144,6 @@ li:hover {
 	display: flex;
 	justify-content: space-evenly;
 	margin: 2em 1em;
-
 }
 
 .filters button {
@@ -155,6 +156,7 @@ li:hover {
 	color: #1D6154;
 	border-radius: 60px;
 	transition: all 0.5s;
+	cursor: pointer;
 }
 
 .filters button:hover {
@@ -203,6 +205,76 @@ input[type="submit"]{
 	width: 180px;
 	text-align: center;
 	border-radius: 60px ;
+}
+
+.login-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+}
+
+section.login {
+    padding: 40px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+}
+
+section.login h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+section.login form {
+    display: flex;
+    flex-direction: column;
+}
+
+section.login label {
+    text-align: left;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+section.login input[type="email"],
+section.login input[type="password"] {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: none;
+	box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+}
+
+section.login input[type="submit"] {
+    background-color: #006644;
+    color: #ffffff;
+    border: none;
+    border-radius: 20px;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+section.login input[type="submit"]:hover {
+    background-color: #004c33;
+}
+
+section.login p {
+    margin-top: 10px;
+}
+
+section.login p a {
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+section.login p a:hover {
+    text-decoration: underline;
 }
 
 footer nav ul {
