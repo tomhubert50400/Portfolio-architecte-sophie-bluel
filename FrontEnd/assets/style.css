@@ -137,6 +137,31 @@ li:hover {
 	width: 100%;
 
 }
+
+.filters {
+	display: flex;
+	justify-content: space-evenly;
+	margin: 2em 1em;
+
+}
+
+.filters button {
+	font-family: 'Syne';
+	font-weight: 700;
+	font-size: 1.2em;
+	padding: 10px 20px;
+	background-color: #fff;
+	border: #1D6154 solid 1px;
+	color: #1D6154;
+	border-radius: 60px;
+	transition: all 0.5s;
+}
+
+.filters button:hover {
+	background-color: #1D6154;
+	color: #fff;
+}
+
 #contact {
 	width: 50%;
 margin: auto;
