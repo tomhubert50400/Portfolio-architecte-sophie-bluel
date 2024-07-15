@@ -124,8 +124,162 @@ li:hover {
 	margin-bottom: 0.5em;
 }
 #portfolio h2 {
-	text-align: center;
-	margin-bottom: 1em;
+	display: flex;
+    text-align: center;
+    justify-content: center;
+    margin-bottom: 1em;
+}
+
+.modal-edit {
+	font-family: 'work sans';
+	border: none;
+	cursor: pointer;
+	background-color: #fff;
+}
+
+.modal-edit i {
+	margin: 0 10px;
+}
+
+#add-photo-view .form-group {
+    margin-bottom: 15px;
+}
+
+#add-photo-view label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#add-photo-view input[type="file"],
+#add-photo-view input[type="text"],
+#add-photo-view select {
+	width: 95%;
+    padding: 10px;
+    border: none;
+    box-shadow: 1px 8px 9px rgba(0, 0, 0, 0.1);
+}
+
+#add-photo-view button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #1D6154;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+#add-photo-view button[type="submit"]:hover {
+    background-color: #14543a;
+}
+
+#add-photo-view .back {
+    cursor: pointer;
+    font-size: 24px;
+    display: block;
+    margin-bottom: 20px;
+}
+
+
+/* Modale */
+.modale-container {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    position: fixed; /* Stay in place */
+    top: 50%; /* Position from the top */
+    left: 50%; /* Position from the left */
+    transform: translate(-50%, -50%); /* Offset by half of its width and height */
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 600px; /* Max width for the modal */
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-content h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modal-content .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+}
+
+.modal-content .gallery figure {
+    position: relative;
+}
+
+.modal-content .gallery img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+/* Styles pour l'icône de suppression */
+.delete-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px;
+    border-radius: 50%;
+    z-index: 10; /* Ensure the icon is on top */
+    cursor: pointer;
+}
+
+.add-photo-btn {
+    display: block;
+    margin: 20px auto 0;
+    padding: 10px 20px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #fff;
+    background-color: #1D6154;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-photo-btn:hover {
+    background-color: #14543a;
 }
 .gallery {
 	width: 100%;
