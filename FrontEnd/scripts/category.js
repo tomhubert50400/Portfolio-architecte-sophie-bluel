@@ -54,9 +54,9 @@ document.addEventListener("DOMContentLoaded", async () => { // Charge totalement
       });
     }
 
-    // Afficher tous les travaux par défaut
-    displayWorks(works); // J'affiche tous les travaux par défaut
-  } catch (error) { // Je catch les potentielles erreurs
-    console.error('Error fetching data:', error); // Je les log dans ma console
+    // Afficher tous les travaux par défaut et affichage des potentielles erreurs
+    displayWorks(works);
+  } catch (error) {
+    console.error('Error fetching data:', error); 
   }
 });

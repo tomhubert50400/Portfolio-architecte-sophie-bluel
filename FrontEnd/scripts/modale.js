@@ -1,14 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => { // On charge la page avant d'executer le script
     //On récupère chaque élément via son ID de référence
     const modal = document.getElementById("myModal"); 
-    const btn = document.getElementById("modal-edit");
+    const modalButton = document.getElementById("modal-edit");
     const span = document.getElementsByClassName("close")[0];
     const addPhotoBtn = document.getElementById("add-photo-btn");
     const galleryView = document.getElementById("gallery-view");
     const addPhotoView = document.getElementById("add-photo-view");
     const backBtn = document.querySelector("#add-photo-view .back");
 
-    btn.onclick = function() { // Quand l'utilisateur clique sur le bouton "modifier"
+    modalButton.onclick = function() { // Quand l'utilisateur clique sur le bouton "modifier"
         modal.style.display = "block"; // On affiche la modale
         displayWorksInModal(); // On affiche les travaux dans la modale
     }

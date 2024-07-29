@@ -1,3 +1,4 @@
+// 
 document.addEventListener("DOMContentLoaded", () => { // Charge totalement le contenu du site avant d'executer le script
     const token = localStorage.getItem('token'); // Je récupère le token stocké dans le localStorage
     const loginMenuItem = document.querySelector('nav ul li:nth-child(3)'); // Je récupère le 3ème élément de ma nav (le bouton login)
