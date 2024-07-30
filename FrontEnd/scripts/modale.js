@@ -106,38 +106,45 @@ async function deleteWork(workId) { // Fonction pour supprimer un projet
     }
 }
 
-async function populateCategories() { // Fonction pour afficher les catégories dans le formulaire d'ajout de photo
-    const categorySelect = document.getElementById('category'); // On récupère le select des catégories via son ID "category"
+// Je récupère les catégories depuis l'api et je les affiche dans le formulaire d'ajout de photo
+async function populateCategories() { 
+    const categorySelect = document.getElementById('category'); 
     categorySelect.innerHTML = ''; // On vide le select avant d'ajouter les catégories pour éviter les doublons
 
-    try { 
-        const response = await fetch('http://localhost:5678/api/categories'); // On récupère les catégories via l'API
-        const categories = await response.json(); // On convertit la réponse en JSON
+    try {
+        // Je récupère les catégories depuis l'api et je stock le résultat dans un JSON
+        const response = await fetch('http://localhost:5678/api/categories'); 
+        const categories = await response.json(); 
 
-        categories.forEach(category => { // On boucle categories pour récupérer chaque catégories 
-            const option = document.createElement('option');  // On crée une balise option
-            option.value = category.id; // On ajoute l'ID de la catégorie en valeur de l'option
-            option.textContent = category.name; // On ajoute le nom de la catégorie dans le texte de l'option
-            categorySelect.appendChild(option); // On ajoute l'option dans le select 
+        // Je boucle sur les catégories pour les afficher dans le formulaire
+        categories.forEach(category => { 
+            const option = document.createElement('option');  
+            option.value = category.id; 
+            option.textContent = category.name; 
+            categorySelect.appendChild(option); 
         });
     } catch (error) {
         console.error('Error fetching categories:', error);
     }
 }
 
-document.getElementById('add-photo-form').addEventListener('submit', async (event) => { // On écoute l'événement submit du formulaire d'ajout de photo
+// On écoute l'événement submit du formulaire d'ajout de photo 
+document.getElementById('add-photo-form').addEventListener('submit', async (event) => {
     event.preventDefault(); // Empêche le comportement par défaut du formulaire
     
-    const formData = new FormData(); // On crée un objet FormData pour envoyer les données du formulaire
-    const photoInput = document.getElementById('photo'); // On récupère l'input de type file via son ID "photo"
-    const titleInput = document.getElementById('title'); // On récupère l'input du titre via son ID "title"
-    const categorySelect = document.getElementById('category'); // On récupère le select des catégories via son ID "category"
+    // On crée un objet FormData pour envoyer les données du formulaire et on récupère les éléments du formulaire
+    const formData = new FormData(); 
+    const photoInput = document.getElementById('photo'); 
+    const titleInput = document.getElementById('title'); 
+    const categorySelect = document.getElementById('category'); 
 
-    formData.append('image', photoInput.files[0]); // On ajoute l'image dans le FormData
-    formData.append('title', titleInput.value); // On ajoute le titre dans le FormData
-    formData.append('category', categorySelect.value); // On ajoute la catégorie dans le FormData
+    // On ajoute les données du formulaire dans le FormData
+    formData.append('image', photoInput.files[0]); 
+    formData.append('title', titleInput.value); 
+    formData.append('category', categorySelect.value); 
 
-    console.log('Form Data:', formData.get('image'), formData.get('title'), formData.get('category')); // On affiche les données du formulaire dans la console (déboggue)
+    // Console log des données du formulaire
+    console.log('Form Data:', formData.get('image'), formData.get('title'), formData.get('category')); 
 
     try {
         const response = await fetch('http://localhost:5678/api/works', { // On envoie une requête POST à l'API pour ajouter un projet
@@ -148,17 +155,19 @@ document.getElementById('add-photo-form').addEventListener('submit', async (even
             body: formData // On envoie les données du formulaire
         });
 
-        console.log('Response status:', response.status); // On affiche le statut de la réponse dans la console (déboggue)
-        const responseData = await response.json(); // On convertit la réponse en JSON
-        console.log('Response data:', responseData); // On affiche les données de la réponse dans la console (déboggue)
+        console.log('Response status:', response.status); 
+        const responseData = await response.json(); 
+        console.log('Response data:', responseData); 
 
-        if (response.ok) { // Si la requête a réussi
-            alert('Photo ajoutée avec succès !'); // On affiche un message de succès
-            // Retourner à la vue galerie et actualiser les travaux
-            const galleryView = document.getElementById("gallery-view"); // On récupère la vue de la galerie via son ID "gallery-view"
-            const addPhotoView = document.getElementById("add-photo-view"); // On récupère la vue d'ajout de photo via son ID "add-photo-view"
+        if (response.ok) { 
+            alert('Photo ajoutée avec succès !'); 
 
-            if (galleryView && addPhotoView) { // Si les deux éléments existent
+            // On récupère les éléments de la galerie et de la vue d'ajout de photo
+            const galleryView = document.getElementById("gallery-view");
+            const addPhotoView = document.getElementById("add-photo-view");
+
+            // Si les éléments existent, on affiche la galerie et on cache la vue d'ajout de photo
+            if (galleryView && addPhotoView) { 
                 galleryView.style.display = "block";
                 addPhotoView.style.display = "none";
             }
