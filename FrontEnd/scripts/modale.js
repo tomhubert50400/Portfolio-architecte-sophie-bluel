@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => { // On charge la page avant d'executer le script
+
     //On récupère chaque élément via son ID de référence
     const modal = document.getElementById("myModal"); 
     const modalButton = document.getElementById("modal-edit");
@@ -8,51 +9,60 @@ document.addEventListener("DOMContentLoaded", () => { // On charge la page avant
     const addPhotoView = document.getElementById("add-photo-view");
     const backBtn = document.querySelector("#add-photo-view .back");
 
-    modalButton.onclick = function() { // Quand l'utilisateur clique sur le bouton "modifier"
-        modal.style.display = "block"; // On affiche la modale
-        displayWorksInModal(); // On affiche les travaux dans la modale
+    // Quand l'utilisateur clique sur le bouton "Modifier" je passe la modale en display block et j'affiche les travaux
+    modalButton.onclick = function() { 
+        modal.style.display = "block"; 
+        displayWorksInModal(); 
     }
 
-    span.onclick = function() { // Quand l'utilisateur clique sur le bouton de fermeture de la modale
-        modal.style.display = "none"; // On passe la modale en display none
+    // Quand l'utilisateur clique sur la croix, je passe la modale en display none
+    span.onclick = function() { 
+        modal.style.display = "none"; 
     }
- 
-    window.onclick = function(event) { // Quand l'utilisateur clique en dehors de la modale
-        if (event.target == modal) { // Si l'élément cliqué est la modale
-            modal.style.display = "none"; // On passe la modale en display none
+    
+    // Je ferme la modale si l'utilisateur clique en dehors
+    window.onclick = function(event) { 
+        if (event.target == modal) { 
+            modal.style.display = "none"; 
         }
     }
 
-    addPhotoBtn.onclick = function() { // Quand l'utilisateur clique sur le bouton "Ajouter une photo"
-        galleryView.style.display = "none"; // On passe la galerie en display none
-        addPhotoView.style.display = "block"; // On affiche la vue d'ajout de photo
-        populateCategories(); 
+    // Quand l'utilisateur clique sur le bouton "Ajouter une photo" je passe la galerie en display none et j'affiche la vue d'ajout de photo
+    addPhotoBtn.onclick = function() { 
+        galleryView.style.display = "none"; 
+        addPhotoView.style.display = "block";
+        populateCategories(); // On affiche les catégories dans le formulaire d'ajout de photo
     }
 
-    backBtn.onclick = function() { // Quand l'utilisateur clique sur le bouton de retour
-        galleryView.style.display = "block"; // On affiche la galerie
-        addPhotoView.style.display = "none"; // On passe la vue d'ajout de photo en display none
+    // Quand l'utilisateur clique sur le bouton "Retour" je passe la galerie en display block et j'enlève la vue d'ajout de photo
+    backBtn.onclick = function() { 
+        galleryView.style.display = "block"; 
+        addPhotoView.style.display = "none"; 
     }
 });
 
 async function displayWorksInModal() { // Fonction pour afficher les travaux dans la modale
-    const gallery = document.querySelector('.modal-content .gallery'); // On récupère la div de la galerie dans la modale
-    gallery.innerHTML = '';  // On vide la galerie avant d'ajouter les projets pour éviter les dupicatas
+    const gallery = document.querySelector('.modal-content .gallery'); 
+    gallery.innerHTML = ''; 
 
-    try { // On essaie de récupérer les travaux via l'API
-        const response = await fetch('http://localhost:5678/api/works'); // On récupère les projets via l'API
-        const works = await response.json(); // On convertit la réponse en JSON
+    try {
+
+        // Je récupère les travaux depuis l'api et je stock le résultat dans un JSON
+        const response = await fetch('http://localhost:5678/api/works');
+        const works = await response.json(); 
 
         works.forEach(work => { // On boucle works pour récupérer chaque projets
-            // On crée les éléments différents éléments HTML
+
+            // On crée les différents éléments HTML
             const figure = document.createElement('figure');
             const img = document.createElement('img');
             const figcaption = document.createElement('figcaption');
             const deleteIcon = document.createElement('i');
 
-            img.src = work.imageUrl; // On ajoute l'URL de l'image du projet
-            img.alt = work.title; // On ajoute le titre du projet en alt de l'image
-            figcaption.textContent = work.title; // On ajoute le titre du projet dans figcaption
+            // Configuration de l'image et du figcaption
+            img.src = work.imageUrl; 
+            img.alt = work.title; 
+            figcaption.textContent = work.title; 
 
             // Configuration de l'icône de suppression
             deleteIcon.className = 'fa-solid fa-trash-can delete-icon';
@@ -76,24 +86,23 @@ async function deleteWork(workId) { // Fonction pour supprimer un projet
         return; // Si l'utilisateur annule, on ne fait rien
     }
 
-    try { // On essaie de supprimer le projet via l'API
-        const response = await fetch(`http://localhost:5678/api/works/${workId}`, {  // On envoie une requête DELETE à l'API pour supprimer le projet
+    try {
+        const response = await fetch(`http://localhost:5678/api/works/${workId}`, { // On envoie une requête DELETE à l'API pour supprimer le projet
             method: 'DELETE', // Méthode HTTP DELETE
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}` // On envoie le token dans le header de la requête
             }
         });
 
-        if (response.ok) { // Si la requête a réussi
-            alert('Projet supprimé avec succès !'); // On affiche un message de succès
-            // Mettre à jour l'affichage de la galerie
+        if (response.ok) { // Si la requête a réussi je met à jour la modale 
+            alert('Projet supprimé avec succès !');
             displayWorksInModal(); 
-        } else { // Si la requête a échoué
-            alert('Erreur lors de la suppression du projet.'); // On affiche un message d'erreur
+        } else {
+            alert('Erreur lors de la suppression du projet.');
         }
-    } catch (error) { // Si une erreur survient
-        console.error('Error deleting work:', error); // On affiche l'erreur dans la console
-        alert('Une erreur est survenue. Veuillez réessayer plus tard.'); // On affiche un message d'erreur générique
+    } catch (error) { 
+        console.error('Error deleting work:', error); 
+        alert('Une erreur est survenue. Veuillez réessayer plus tard.');
     }
 }
 

@@ -1,60 +1,66 @@
 document.addEventListener("DOMContentLoaded", async () => { // Charge totalement le contenu du site avant d'executer le script
   try { // On essaye le script, en cas de potentielles erreurs
-    // Récupérer les travaux
-    const responseWorks = await fetch('http://localhost:5678/api/works'); //Je récupère dans une constante les projets
-    const works = await responseWorks.json(); // Je stock mon résultat (les projets) dans un JSON
 
-    // Récupérer les catégories
-    const responseCategories = await fetch('http://localhost:5678/api/categories'); // Je récupère mes catégories, toujours dans une constante
-    const categories = await responseCategories.json(); // Je les stocks dans un JSON
+    // Je récupère les travaux depuis l'api et stocker le résultat dans un JSON
+    const responseWorks = await fetch('http://localhost:5678/api/works'); 
+    const works = await responseWorks.json(); 
 
-    // Générer le menu de catégories dynamiquement
-    const filters = document.getElementById('filters'); // Je récupère mon élément HTML qui a pour ID : 'filters'
+    // Je récupère les catégories (filtres) depuis l'api et stocker le résultat dans un JSON
+    const responseCategories = await fetch('http://localhost:5678/api/categories'); 
+    const categories = await responseCategories.json(); 
+
+    // Je récupère mon élément HTML qui a pour ID : 'filters'
+    const filters = document.getElementById('filters'); 
     
-    // Vider les filtres existants pour éviter les duplications
-    filters.innerHTML = ''; // Je vide les filtres existants pour éviter les duplications (suite à certains problèmes)
+    // Je vide les filtres existants pour éviter les duplications (suite à certains problèmes)
+    filters.innerHTML = ''; 
 
-    // Ajouter le bouton "Tous" pour afficher tous les travaux
-    const allButton = document.createElement('button'); // Je crée un élément HTML "<button>"
-    allButton.id = 'all'; // J'attribue l'ID "all" à mon <button>
-    allButton.textContent = 'Tous'; //<button>Tous</button>
-    filters.appendChild(allButton); // Je passe <button> en tant qu'enfant de ma <div id="filters"></div>
+    // Je crée le bouton "Tous" pour afficher tous les travaux
+    const allButton = document.createElement('button'); 
+    allButton.id = 'all'; 
+    allButton.textContent = 'Tous';
+    filters.appendChild(allButton);
     
-    allButton.addEventListener('click', () => displayWorks(works)); // J'ajoute un event 'click' à mon button 'tous' et je défini une fonction fléchée qui défini une action lorsque le bouton est cliqué
+    // J'ajoute un event click sur le bouton "Tous" pour afficher tous les travaux
+    allButton.addEventListener('click', () => displayWorks(works)); 
 
-    categories.forEach(category => { // Je boucle sur mes catégories
-      const button = document.createElement('button'); // Je crée un <button> que je stock dans une constante
-      button.id = category.id; // j'assigne un ID unique à chaque bouton et selon sa catégorie
-      button.textContent = category.name; // J'assigne le nom de la catégorie comme texte du bouton
-      filters.appendChild(button); // Je passe mon bouton enfant de filters
+    // Je boucle sur mes catégories pour créer un bouton par catégorie
+    categories.forEach(category => {
+      const button = document.createElement('button'); 
+      button.id = category.id; 
+      button.textContent = category.name; n
+      filters.appendChild(button); 
       
-      button.addEventListener('click', () => { // Je refais un event click mais sur le reste de mes boutons cette fois
-        const filteredWorks = works.filter(work => work.categoryId === category.id); // Je crée un tableau contenant uniquement les projets dont l'identifiant est le meme que la catégorie du bouton
-        displayWorks(filteredWorks); // J'affiche les projets filtrés
+      // J'ajoute un event click sur chaque bouton pour afficher les travaux de la catégorie correspondante
+      button.addEventListener('click', () => { 
+        const filteredWorks = works.filter(work => work.categoryId === category.id); 
+        displayWorks(filteredWorks); 
       });
     });
 
-    // Fonction pour afficher les travaux
-    function displayWorks(worksToDisplay) { // Je crée une fonction qui prend en paramètre les travaux à afficher
-      const gallery = document.getElementById('gallery'); //Je récupère mon ID gallery dans une constante
-      gallery.innerHTML = ''; // Je vide la galerie avant d'ajouter les travaux filtrés
+    // Je crée une fonction qui prend en paramètre les travaux à afficher 
+    function displayWorks(worksToDisplay) { 
+      const gallery = document.getElementById('gallery'); 
+      gallery.innerHTML = ''; 
 
-      worksToDisplay.forEach(work => { // Je boucle worksToDisplay 
-        const figure = document.createElement('figure'); // Je crée une balise <figure></figure> 
-        const img = document.createElement('img'); // Je crée une balise <img src="" alt="" />
-        const figcaption = document.createElement('figcaption'); // Je crée une balise <figcaption></figcaption>
+      // Je boucle sur les travaux à afficher pour les afficher
+      worksToDisplay.forEach(work => { 
+        const figure = document.createElement('figure');
+        const img = document.createElement('img'); 
+        const figcaption = document.createElement('figcaption');
 
-        img.src = work.imageUrl; // J'ajoute l'url de mon image au src de ma balise img 
-        img.alt = work.title; // J'ajoute le titre de mon projet à l'alt 
-        figcaption.textContent = work.title; // j'ajoute encore le titre de mon projet, mais à <figcaption>.
+        img.src = work.imageUrl; 
+        img.alt = work.title; 
+        figcaption.textContent = work.title; 
 
-        figure.appendChild(img); // Je transfert <img /> en tant qu'enfant de <figure> 
-        figure.appendChild(figcaption); // Je transfert <figcaption> en tant qu'enfant de <figure>
-        gallery.appendChild(figure); // Enfin, j'ajoute le tout dans ma DIV avec l'ID gallery (récupérée plus haut)
+        // Je gère l'arborecence des éléments HTML
+        figure.appendChild(img); 
+        figure.appendChild(figcaption); 
+        gallery.appendChild(figure); 
       });
     }
 
-    // Afficher tous les travaux par défaut et affichage des potentielles erreurs
+    // J'affiche tous les travaux par défaut et je vérifie les potentielles erreurs
     displayWorks(works);
   } catch (error) {
     console.error('Error fetching data:', error); 

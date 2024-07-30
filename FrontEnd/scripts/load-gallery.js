@@ -1,11 +1,12 @@
 document.addEventListener("DOMContentLoaded", async () => { // On charge la page avant d'executer le script
   const filters = document.getElementById('filters'); // On récupère la div des filtres via son ID "filters"
   
-  // Vérifiez que les filtres ne sont pas déjà créés
-  if (filters.childElementCount === 0) { // Si la div des filtres est vide alors on crée les filtres
+  // Je vérifie que les filtres ne sont pas déjà créés
+  if (filters.childElementCount === 0) { 
     try {
-      const response = await fetch('http://localhost:5678/api/works'); // On récupère les projets via l'API
-      const works = await response.json(); // On convertit la réponse en JSON
+      // Je récupère les projets via l'api et je convertit la réponse en JSON
+      const response = await fetch('http://localhost:5678/api/works');
+      const works = await response.json(); 
       
       const gallery = document.getElementById('gallery'); // On récupère la div de la galerie via son ID "gallery"
       gallery.innerHTML = ''; // Vider la galerie avant d'ajouter les travaux filtrés
