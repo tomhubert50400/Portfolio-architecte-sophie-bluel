@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => { // Charge totalement le contenu du site avant d'executer le script
-  try { // On essaye le script, en cas de potentielles erreurs
+  try {
 
     // Je récupère les travaux depuis l'api et stocker le résultat dans un JSON
     const responseWorks = await fetch('http://localhost:5678/api/works'); 
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async () => { // Charge totalement
     categories.forEach(category => {
       const button = document.createElement('button'); 
       button.id = category.id; 
-      button.textContent = category.name; n
+      button.textContent = category.name;
       filters.appendChild(button); 
       
       // J'ajoute un event click sur chaque bouton pour afficher les travaux de la catégorie correspondante
@@ -45,10 +45,12 @@ document.addEventListener("DOMContentLoaded", async () => { // Charge totalement
 
       // Je boucle sur les travaux à afficher pour les afficher
       worksToDisplay.forEach(work => { 
+        // Je crée les éléments HTML nécessaires pour afficher les travaux
         const figure = document.createElement('figure');
         const img = document.createElement('img'); 
         const figcaption = document.createElement('figcaption');
 
+        // Je remplis les éléments HTML avec les données des travaux
         img.src = work.imageUrl; 
         img.alt = work.title; 
         figcaption.textContent = work.title; 
